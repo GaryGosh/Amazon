@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const User = require("../models/auth");
+const _ = require('lodash');
+
 
 const transport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -54,7 +56,7 @@ exports.signUp = (req, res) => {
 
                 <hr />
 
-                <p>This emai contains sensitive information</p>
+                <p>This email contains sensitive information</p>
                 <a href="${process.env.CLIENT_URL}" target="_blank">
                 ${process.env.CLIENT_URL}
                 </a>
@@ -140,7 +142,7 @@ exports.signIn = (req, res) => {
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
+      expiresIn: "7d",
     });
 
     const { _id, name, role, email } = user;
@@ -155,6 +157,108 @@ exports.signIn = (req, res) => {
       },
       message: "Signed in successfully.",
     });
-
   });
+};
+
+exports.forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User doesn't exist.",
+      });
+    }
+
+    const token = jwt.sign(
+      { _id: user._id, name: user.name },
+      process.env.JWT_RESET_PASSWORD,
+      {
+        expiresIn: "20m",
+      }
+    );
+
+    const link = `${process.env.CLIENT_URL}/auth/password/reset/${token}`;
+
+    const emailData = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: "Passowd Reset Link",
+      html: `
+        /* <div> */
+          <h1>Please use the following link to reset your password</h1>
+
+          <a href="${link}" target="_blank">${link}</a>
+
+          /* <hr />
+
+          <p>This email contains sensitive information</p>
+          <a href="${process.env.CLIENT_URL}" target="_blank">
+          ${process.env.CLIENT_URL}
+          </a>
+        </div> */
+      `,
+    };
+
+    return user.updateOne({ resetPasswordLink: token }).exec((err, success) => {
+      if(err) {
+        return res.status(400).json({
+          error: "There was an error in saving the reset password link",
+        });
+      }
+
+      transport.sendMail(emailData).then(() => {
+        return res.json({
+          message: `Email has been succesfully sent to ${email}`,
+        });
+      }).catch((err) => {
+        console.log(err);
+        return res.status(400).json({
+          error: "There was an error in sending the email.",
+        });
+      });
+    });
+  });
+};
+
+
+exports.resetPassword = (req, res) => {
+  const { resetPasswordLink, newPassword } = req.body;
+
+  if(resetPasswordLink) {
+    jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, (err) => {
+      if(err) {
+        return res.status(400).json ({
+          error: "Expired Link. Try again."
+        });
+      }
+
+      User.findOne({resetPasswordLink}).exec((err, user) => {
+        if(err || !user) {
+          return res.status(400).json({
+            error: "Something went wrong, try again",
+          });
+        }
+
+        const updateFields = {
+          password: newPassword,
+          resetPasswordLink: '',
+        };
+
+        user = _.extend(user, updateFields);
+
+        user.save((err) => {
+          if(err) {
+            return res.status(400).json({
+              error: "error in resetting the password",
+            });
+          }
+
+          return res.json({
+            message: "Great! The password has reset.",
+          });
+        });
+      });
+    });
+  }
 };
