@@ -5,8 +5,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const authRoutes = require("./routes/auth");
+const { authorize } = require("./middlewares/auth");
+const userRoutes = require("./routes/users");
 
-const { NODE_PORT, NODE_ENV, DATABASE_URL, CLIENT_URL } = process.env;
+const { NODE_PORT, NODE_ENV, DATABASE_URL } = process.env;
 const PORT = NODE_PORT || 8000;
 
 const isDevelopment = NODE_ENV === "development";
@@ -32,6 +34,7 @@ if (isDevelopment) {
 }
 
 app.use("/api", authRoutes);
+app.use("/api/users", authorize, userRoutes);
 
 mongoose
   .connect(DATABASE_URL, {
