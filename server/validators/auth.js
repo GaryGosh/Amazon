@@ -8,3 +8,10 @@ exports.userSignupValidator = [
     .isLength({ min: MIN })
     .withMessage(`Password must be atleast ${MIN} characters long`),
 ];
+
+exports.userSigninValidator = [
+  check("email").isEmail().withMessage("Must be a valid email"),
+  check("password")
+    .isLength({ min: MIN })
+    .withMessage(`Password must be atleast ${MIN} characters long`),
+];
