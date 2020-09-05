@@ -5,6 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { StateProvider } from "./StateProvider";
 import reducer, { initialState } from "./reducer";
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>

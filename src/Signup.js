@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer, Zoom } from "react-toastify";
+import './Signup.css';
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [formInputs, setFormInputs] = useState({
@@ -23,7 +25,7 @@ const Signup = () => {
     evt.preventDefault();
 
     if (password !== "" && password === confirmPassword) {
-      setFormInputs({ ...formInputs, buttonText: "Singing up..." });
+      setFormInputs({ ...formInputs, buttonText: "Signing up..." });
 
       axios
         .post("/signup", {
@@ -64,6 +66,13 @@ const Signup = () => {
 
   return (
     <div className="signup">
+        <Link to="/">
+        <img
+          className="signup__logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
+          alt=""
+        />
+      </Link>
       <ToastContainer draggable={false} transition={Zoom} autoClose={5000} />
       <div className="signup__container">
         <h1>Sign up</h1>
@@ -94,7 +103,7 @@ const Signup = () => {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="login__signInButton"
+            className="signup__signupButton"
           >
             {buttonText}
           </button>
