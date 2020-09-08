@@ -1,0 +1,39 @@
+.activate {
+    background-color: lime;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .activate__container {
+    background-color: lightsalmon;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
+    border: 1px solid lightgray;
+} */
+
+.activate__container > h1 {
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.activate__logo {
+    width: 100px;
+    object-fit: contain;
+    margin: 20px;
+}
+
+.activate__button {
+    background: #f0c14b;
+    border-radius: 2px;
+    width: 97%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: #a88734 #9c7e31 #846a29;
+    cursor: pointer;
+}

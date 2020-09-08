@@ -8,6 +8,8 @@ import Login from "./Login";
 import Signup from "./Signup";
 import axios from "axios";
 import { getCookie, signout } from "./utils/helpers";
+import Forgot from "./Forgot";
+import Activate from "./Activate";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 axios.interceptors.request.use((config) => {
@@ -40,6 +42,8 @@ function App() {
             <Login />
           </Route>
           <Route path="/signup" exact component={Signup} />
+          <Route path="/auth/password/forgot" exact component={Forgot} />
+          <Route path="/auth/activate/:token" exact component={Activate} />
           <Route path="/">
             <Header />
             <Home />

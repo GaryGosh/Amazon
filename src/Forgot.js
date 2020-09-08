@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import { Link } from "react-router-dom";
+import './Forgot.css';
 
 
-function Forgot() {
+function Forgot({ history }) {
 
     const [values, setValues] = useState({
         email: "",
@@ -12,20 +14,51 @@ function Forgot() {
 
     const { email, buttonText } = values;
 
-    const handleChange = 
+    const handleChange = (name) => (event) => {
+        console.log(event.target.value);
+        setValues({ ...values, [name]: event.target.value });
+    };
+
+    const clickSubmit = (event) => {
+        event.preventDefault();
+        setValues({ ...values, buttonText: "Submitting..."});
+        axios.post("forgot-password", {email})
+        .then((response) => {
+            console.log("FORGOT PASSWORD SUCCESS", response);
+            toast.success(response.data.message);
+            setValues({ ...values, buttonText: "Request password reset link"});
+        });
+    };
 
   return (
     <div className="forgot">
-      <h1>Forgot Password</h1>
-      <form>
-        <h5>Enter the E-mail for your account</h5>
-        <input
-          onChange={handleChange}
-          name="email"
-          type="email"
-          value={email}
+        <Link to="/">
+        <img
+          className="forgot__logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
+          alt=""
         />
-      </form>
+        </Link>
+        <ToastContainer draggable={false} transition={Zoom} autoClose={5000} />
+        <div className="forgot__container">
+            <h1>Forgot Password</h1>
+            <form>
+                <h5>Enter the E-mail for your account</h5>
+                <input
+                onChange={handleChange("email")}
+                name="email"
+                type="email"
+                value={email}
+                />
+                <button
+                    type="submit"
+                    onClick={clickSubmit}
+                    className="forgot__button"
+                >
+                    {buttonText}
+                </button>
+            </form>
+        </div>
     </div>
   );
 }
