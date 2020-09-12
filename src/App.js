@@ -10,6 +10,7 @@ import axios from "axios";
 import { getCookie, signout } from "./utils/helpers";
 import Forgot from "./Forgot";
 import Activate from "./Activate";
+import Reset from "./Reset";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 axios.interceptors.request.use((config) => {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/auth/password/forgot" exact component={Forgot} />
           <Route path="/auth/activate/:token" exact component={Activate} />
+          <Route path="/auth/password/reset/:token" exact component={Reset} />
           <Route path="/">
             <Header />
             <Home />

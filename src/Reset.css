@@ -1,4 +1,4 @@
-.forgot {
+.reset {
     background-color: lime;
     height: 100vh;
     display: flex;
@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.forgot__container {
+.reset__container {
     background-color: lightsalmon;
     width: 300px;
     display: flex;
@@ -16,28 +16,28 @@
     border: 1px solid lightgray;
 }
 
-.forgot__container > h1 {
+.reset__container > h1 {
     font-weight: 500;
     margin-bottom: 20px;
 }
 
-.forgot__container > form > h5 {
+.reset__container > form > h5 {
     margin-bottom: 5px;
 }
 
-.forgot__container > form > input {
+.reset__container > form > input {
     height: 30px;
     background-color: white;
     width: 97%;
 }
 
-.forgot__logo {
+.reset__logo {
     width: 100px;
     object-fit: contain;
     margin: 20px;
 }
 
-.forgot__button {
+.reset__button {
     background: #f0c14b;
     border-radius: 2px;
     width: 95%;
