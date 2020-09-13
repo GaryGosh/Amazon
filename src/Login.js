@@ -22,6 +22,7 @@ const Login = ({ history }) => {
         });
     };
 
+
     const handleSubmit = (evt) => {
         // Avoid page refresh
         evt.preventDefault();

@@ -1,0 +1,39 @@
+:root {
+    --gradient: linear-gradient(
+        45deg,
+        #845ec2,
+        #d65db1,
+        #ff6f91,
+        #ff9671,
+        #ffc75f,
+        #f9f871
+    );
+}
+
+.payment__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ddd;
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 10s infinite alternate;
+}
+
+@keyframes bg-animation {
+    0% {background-position: left;}
+    100% {background-position: right;}
+}
+
+.payment__container > h1 {
+    font-weight: 500;
+    margin-bottom: 20px;
+
+}
+
+.payment__container > p {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 19px;
+}

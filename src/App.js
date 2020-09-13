@@ -11,6 +11,7 @@ import { getCookie, signout } from "./utils/helpers";
 import Forgot from "./Forgot";
 import Activate from "./Activate";
 import Reset from "./Reset";
+import Payment from "./Payment";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 axios.interceptors.request.use((config) => {
@@ -39,7 +40,8 @@ function App() {
             <Header />
             <Checkout />
           </Route>
-          <Route path="/login">
+          <Route path="/paynow" exact component={Payment} />
+          <Route path="/signin">
             <Login />
           </Route>
           <Route path="/signup" exact component={Signup} />
