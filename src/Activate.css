@@ -1,20 +1,32 @@
+:root {
+    --gradient: linear-gradient(
+        45deg,
+        #845ec2,
+        #d65db1,
+        #ff6f91,
+        #ff9671,
+        #ffc75f,
+        #f9f871
+    );
+}
+
+
 .activate {
-    background-color: lime;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #ddd;
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 20s infinite alternate;
 }
 
-/* .activate__container {
-    background-color: lightsalmon;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    padding: 20px;
-    border: 1px solid lightgray;
-} */
+@keyframes bg-animation {
+    0% {background-position: left;}
+    100% {background-position: right;}
+}
+
 
 .activate__container > h1 {
     font-weight: 500;
