@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { useStateValue } from "./StateProvider";
+import { isAuth, signout } from "./utils/helpers";
+import { withRouter } from 'react-router-dom';
 
-function Header() {
-  const [{basket}] = useStateValue();
+function Header(history) {
+  const [{ basket }] = useStateValue();
 
   console.log(basket);
 
@@ -29,13 +31,32 @@ function Header() {
       {/* Four Links */}
       <div className="header__nav">
         {/* 1st Link */}
-        <Link to="/signin" className="header__link">
+        {!isAuth() && (
+          <>
+            <Link to="/signin" className="header__link">
+              <div className="header__option">
+                <span className="header__optionLineOne">Hello User</span>
+                <span className="header__optionLineTwo">Sign in</span>
+              </div>
+            </Link>
+          </>
+        )}
+        {isAuth() && (
+          <>
           <div className="header__option">
-            <span className="header__optionLineOne">Hello User</span>
-            <span className="header__optionLineTwo">Sign in</span>
+            <span
+              className="header__signout"
+              onClick={() => {
+                signout(() => {
+                  history.push("/login");
+                });
+              }}
+            >
+              Sign out
+            </span>
           </div>
-        </Link>
-
+          </>
+        )}
         {/* 2nd Link */}
         <Link to="/" className="header__link">
           <div className="header__option">
@@ -71,4 +92,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default withRouter(Header);

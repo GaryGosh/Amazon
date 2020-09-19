@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { authenticate, isAuth } from "./utils/helpers";
+import { withRouter } from 'react-router-dom';
 
 
 const Login = ({ history }) => {
@@ -33,8 +34,13 @@ const Login = ({ history }) => {
             password,
         }).then((res) => {
             console.log("Signed in . Yaay!!", res);
-
+            toast.success(res.data.message);
+            setTimeout(() => {
+              history.push("/");
+            }, 2500);
             authenticate(res, () => {
+              console.log("Done niggah");
+              /* this.props.history.push("/"); */
                 setFormInputs({
                     ...formInputs,
                     name: "",
@@ -42,7 +48,8 @@ const Login = ({ history }) => {
                     password: "",
                     buttonText: "Signed in",
                 });
-                isAuth() ? history.push("/") : history.push("/signin");
+                /* isAuth() ? history.push("/") : history.push("/signin"); */
+                console.log("Done pushing"); 
             });
         }).catch((err) => {
             if(err && err.response && err.response.data) {
@@ -96,4 +103,4 @@ const Login = ({ history }) => {
   );
 }
 
-export default Login;
+export default withRouter(Login);

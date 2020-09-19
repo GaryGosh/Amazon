@@ -45,6 +45,13 @@
     font-weight: 800;
 }
 
+.header__signout {
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+}
+
 .header__link {
     color: white;
     text-decoration: none;

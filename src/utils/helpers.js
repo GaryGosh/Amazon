@@ -45,6 +45,7 @@ export const authenticate = (response, next) => {
 };
 // access user info from localstorage
 export const isAuth = () => {
+  console.log("Im here inside isAuth");
   if (window !== "undefined") {
     const cookieChecked = getCookie("token");
 
