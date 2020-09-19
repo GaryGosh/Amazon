@@ -48,7 +48,8 @@ function Header(history) {
               className="header__signout"
               onClick={() => {
                 signout(() => {
-                  history.push("/login");
+                  history.push("/");
+                  console.log("Trying to sign out");
                 });
               }}
             >

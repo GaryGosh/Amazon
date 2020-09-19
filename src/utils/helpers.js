@@ -66,6 +66,7 @@ export const signout = (next) => {
   removeCookie("token");
   removeLocalStorage("user");
   next();
+  console.log("inside signout Nigga");
 };
 
 export const updateUser = (response, next) => {
