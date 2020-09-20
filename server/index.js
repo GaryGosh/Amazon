@@ -42,7 +42,7 @@ app.use("/api", authRoutes);
 app.use("/api/users", authorize, userRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 mongoose
