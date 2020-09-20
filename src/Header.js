@@ -6,11 +6,20 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { useStateValue } from "./StateProvider";
 import { isAuth, signout } from "./utils/helpers";
 import { withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-function Header(history) {
+function Header() {
   const [{ basket }] = useStateValue();
 
   console.log(basket);
+
+  let history = useHistory();
+  const handleClick = () => {
+    signout(() => {
+      history.push("/");
+      console.log("Trying to sign out");
+    });
+  }
 
   return (
     <nav className="header">
@@ -46,12 +55,7 @@ function Header(history) {
           <div className="header__option">
             <span
               className="header__signout"
-              onClick={() => {
-                signout(() => {
-                  history.push("/");
-                  console.log("Trying to sign out");
-                });
-              }}
+              onClick={handleClick}
             >
               Sign out
             </span>

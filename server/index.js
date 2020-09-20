@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -8,8 +9,10 @@ const authRoutes = require("./routes/auth");
 const { authorize } = require("./middlewares/auth");
 const userRoutes = require("./routes/users");
 
+const app = express();
+
 const { NODE_PORT, NODE_ENV, DATABASE_URL } = process.env;
-const PORT = NODE_PORT || 8000;
+const PORT = process.env.PORT || NODE_PORT || 8000;
 
 const isDevelopment = NODE_ENV === "development";
 
@@ -32,6 +35,8 @@ if (isDevelopment) {
   //app.use(cors({ origin: CLIENT_URL, optionsSuccessStatus: 200 }));
   app.use(cors());
 }
+
+app.use(express.static(path.join(__dirname, "/build")));
 
 app.use("/api", authRoutes);
 app.use("/api/users", authorize, userRoutes);
